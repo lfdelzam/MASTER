@@ -99,12 +99,10 @@ Copy or link (recommended) reads to this directory:
 Make sure that read file names follow the syntax:
 
 forward reads:  ``<sample_name><fwd_index><reads_ext>``
-		e.g., P6071_505_R1.fq.gz,
-		where sample_name = P6071_505, fwd_index = _R1, and reads_ext = .fq.gz
+e.g., P6071_505_R1.fq.gz, where sample_name = P6071_505, fwd_index = _R1, and reads_ext = .fq.gz
 
 reverse reads: ``<sample_name><rev_index><reads_ext>``
-		e.g., P6071_505_R1.fq.gz,
-		where sample_name = P6071_505, rev_index = _R2, and reads_ext = .fq.gz
+e.g., P6071_505_R1.fq.gz, where sample_name = P6071_505, rev_index = _R2, and reads_ext = .fq.gz
 
 ### 6.1.2. GENOMES ###
 
@@ -146,27 +144,27 @@ In the ``Input_POGENOM_config.json`` file, set the parameters to be used. It con
 			It cannot be empty.
 
 	"mode": "prefilt",
-		When "mode": "prefilt", the pipeline will do a quick prescreening by mapping a subset of 	the reads from each sample, to estimate the coverage of the samples and determine which 	should be included. If no prescreening (prefilt) is required, then an empty string can be set 	("mode": "",).
+		When "mode": "prefilt", the pipeline will do a quick prescreening by mapping a subset of the reads from each sample, to estimate the coverage of the samples and determine which should be included. If no prescreening (prefilt) is required, then an empty string can be set 	("mode": "",).
 
 	"fraction": "0.15",
 		Fraction of reads to be subsampled when running the pipeline using "mode": "prefilt".
-		Lowering the fraction increases the uncertaintly in the coverage estimates. Increasing the 	fraction increases the size of the directory <temp_sub_Reads_dir>/Reads/ and the 	runtime. Required is mode "prefilt" used.
+		Lowering the fraction increases the uncertaintly in the coverage estimates. Increasing the fraction increases the size of the directory <temp_sub_Reads_dir>/Reads/ and the runtime. Required is mode "prefilt" used.
 
 	"temp_sub_Reads_dir": "PREFILT",
-		Directory storing the subsampled reads when running the pipeline using "mode": "prefilt". 	The size of this directory will be "fraction" * the size of "dataset". Required is mode 	"prefilt" used.
+		Directory storing the subsampled reads when running the pipeline using "mode": "prefilt". The size of this directory will be "fraction" * the size of "dataset". Required is mode "prefilt" used.
 
 	"remove_subreads": "yes",
-		Remove the directory of subsampled reads (i.e., <temp_sub_Reads_dir>/Reads/) after 	usage. This directory is created during sample prescreening, when "mode": "prefilt" is 	used.
+		Remove the directory of subsampled reads (i.e., <temp_sub_Reads_dir>/Reads/) after usage. This directory is created during sample prescreening, when "mode": "prefilt" is used.
 
 	"min_coverage": 20,
-		Minimum median coverage depth per sample per genome. Integer. Samples below this 	threshold will not be included in the subsequent comparative analysis.
-		When "mode": "prefilt", and "fraction" : "0.10", a "min_coverage" value lower than 10 will 	select all samples, and the prescreening will be obsolete. It cannot be empty.
+		Minimum median coverage depth per sample per genome. Integer. Samples below this threshold will not be included in the subsequent comparative analysis.
+		When "mode": "prefilt", and "fraction" : "0.10", a "min_coverage" value lower than 10 will select all samples, and the prescreening will be obsolete. It cannot be empty.
 
 	"min_breadth": 40,
 		Minimum coverage breadth (percentage of genome covered) per sample per genome. 	Integer. It cannot be empty.
 
 	"min_bsq_for_cov_median_calculation": 15,
-		Minimum base quality when counting the number of bases per genome position during 	coverage calculation. Integer. It cannot be empty.
+		Minimum base quality when counting the number of bases per genome position during coverage calculation. Integer. It cannot be empty.
 
 	"threads": 15,
 		Number of threads. Integer. It cannot be empty.
@@ -175,7 +173,7 @@ In the ``Input_POGENOM_config.json`` file, set the parameters to be used. It con
 		Extention used on genome files.
 
 	"reads_ext": ".fq.gz",
-		Extention used on read files. For instance, ".fq.gz" if files are named 	"sample_R1.fq.gz & sample_R2.fq.gz".
+		Extention used on read files. For instance, ".fq.gz" if files are named "sample_R1.fq.gz & sample_R2.fq.gz".
 
 	"fwd_index": "_R1",
 		Index used to define forward reads.
@@ -184,32 +182,32 @@ In the ``Input_POGENOM_config.json`` file, set the parameters to be used. It con
 		Index used to define reverse reads.
 
 	"bowtie2_params": "--ignore-quals --mp 1,1 --np 1 --rdg 0,1 --rfg 0,1 --score-min L,0,-0.05",
-		Bowtie2 mapping parameters. The –score-min then gives the minimum score that is 	allowed to report an alignment. Here, it represents a 95% identity threshold, as explained 	in http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml.
+		Bowtie2 mapping parameters. The –score-min then gives the minimum score that is allowed to report an alignment. Here, it represents a 95% identity threshold, as explained in http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml.
 
 	"mapqual": 20,
 		Read mapping quality threshold in BAM files. Integer. Parameter used in samtools view -	q {}. It cannot be empty.
 
 	"samtools_view_alignment_extra_filters": "-f 2 -F 1024",
-		Filters used for selecting mapped reads to be included in the BAM file. Here it selects only 	paired reads (-f 2) and avoids optical duplicates (-F 1024). If no filters are required, then 	an empty string can be set ("samtools_view_alignment_extra_filters": "",)
+		Filters used for selecting mapped reads to be included in the BAM file. Here it selects only paired reads (-f 2) and avoids optical duplicates (-F 1024). If no filters are required, then an empty string can be set ("samtools_view_alignment_extra_filters": "",)
 
-	"freebayes_parameters": "-C 4 -p 1 --pooled-continuous --read-max-mismatch-fraction 0.05 --		min-alternate-fraction 0.01 -q 15",
-		Parameters used during variant calling. By default, freebayes exclude duplicates marked 	as such in alignments. To include duplicates, the tag ``--use-duplicate-reads`` and remove 	"-F 1024" in "samtools_view_alignment_extra_filters" are required.  
-		The flag ``-q --min-	base-quality Q``, exclude alleles from analysis if their supporting 	base quality is less than Q.
+	"freebayes_parameters": "-C 4 -p 1 --pooled-continuous --read-max-mismatch-fraction 0.05 -- min-alternate-fraction 0.01 -q 15",
+		Parameters used during variant calling. By default, freebayes exclude duplicates marked as such in alignments. To include duplicates, the tag ``--use-duplicate-reads`` and remove "-F 1024" in "samtools_view_alignment_extra_filters" are required.  
+		The flag ``-q --min- base-quality Q``, exclude alleles from analysis if their supporting base quality is less than Q.
 
 	"vcffilter_qual": "'QUAL > 20'"
-		Filtering variant calling. It cannot be empty. Here it removes any sites with an estimated 	probability of not being polymorphic less than Phred 20 (corresponding to 99% probability 	of being a real SNP).
+		Filtering variant calling. It cannot be empty. Here it removes any sites with an estimated probability of not being polymorphic less than Phred 20 (corresponding to 99% probability of being a real SNP).
 
 	"snakemake_extra_params": "<command line 1>, <command line 2>",
-		Snakemake extra command line options (comma-separated) to be used. If no extra 	command line, an empty string can be set "snakemake_extra_params": "".
+		Snakemake extra command line options (comma-separated) to be used. If no extra command line, an empty string can be set "snakemake_extra_params": "".
 
 	"annotation": "yes",
-		Set “yes” when prediction and Pfam annotation of genes are required, otherwise, set 	“no”.  
+		Set “yes” when prediction and Pfam annotation of genes are required, otherwise, set “no”.  
 
 	"pfam_db_path": "/absolute/path/to/Pfam-A.hmm",
-		Here, the user set the path to the Pfam-A.hmm database. This parameter is mandatory	 	when "annotation": "yes".
+		Here, the user set the path to the Pfam-A.hmm database. This parameter is mandatory when "annotation": "yes".
 
 	"evalue_pfam": "0.001"
-		E-value threshold used when annotating genes against Pfam database. This parameter is 	mandatory when "annotation": "yes".
+		E-value threshold used when annotating genes against Pfam database. This parameter is mandatory when "annotation": "yes".
 
 To access and modify this file, you can use the following command:
 
@@ -283,6 +281,7 @@ The log files generated during gene prediction are stored in:
 ## 7.1.1 Intermediate files when "mode": "prefilt" ##
 
 When "mode": "prefilt", the suffix ``_prefilt`` will be added to <dataset> in intermediate files B-E, e.g., 05_BAM_merged/<dataset>_prefilt/<genome_name>_merged_sorted_position.bam
+	
 Additionally, the directory PREFILT/<dataset> is created and contains the subdirectories:
 
 02_MAPPING, 03_MPILEUP, and params_<parameters>, where <parameters> is a string of the key parameters used, for instance 'cov_10_mpq_20_bq_15_fr_0.15'.
