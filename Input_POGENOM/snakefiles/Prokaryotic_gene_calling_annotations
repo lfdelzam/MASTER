@@ -1,0 +1,57 @@
+import os
+
+# workflow for protein prediction and annotation - Prokaryotic genomes
+
+# -----DATA ---names-----------------------------------------------------------
+configfile: "./config_files/Input_POGENOM_config.json"
+workdir: config["workdir"]
+thrs = config["threads"]
+Genome_ext = config["genomes_ext"]
+dataset = config["dataset"]
+# ------------------
+
+if config["my_mag"] == "all_genomes":
+    path1 = os.path.join("RAW_DATA", "Genomes", config["dataset"])
+    Genome = [g.replace(Genome_ext, "") for g in os.listdir(path1) if g.endswith(Genome_ext)]
+else:
+        Genome = config["my_mag"]
+
+
+rule all:
+    input:  expand("GFF_files/{data}/{genome}.gff", data=dataset, genome=Genome),
+            expand("Gene_calling/{data}/{genome}/best_hit_pfam/{genome}.fna", data=dataset, genome=Genome),
+            expand("Gene_calling/{data}/{genome}/best_hit_pfam/{genome}.faa", data=dataset, genome=Genome)
+
+rule prodigal:
+    input:  expand("RAW_DATA/Genomes/{data}/{genome}{genome_ext}", data=dataset, genome=Genome, genome_ext=Genome_ext)
+    output: fna = "Gene_calling/{data}/{genome}/{genome}_Prodigal.fna",
+            faa = "Gene_calling/{data}/{genome}/{genome}_Prodigal.faa",
+            gff = "Gene_calling/{data}/{genome}/{genome}_Prodigal.gff"
+    params: geno = "RAW_DATA/Genomes/"+config["dataset"]+"/{genome}"+config["genomes_ext"]
+    log: "Gene_calling/{data}/log_prodigal/{genome}.log"
+    message: "Executing prodigal in single mode on:\n {input}"
+    shell: "prodigal -i {params.geno} -a {output.faa} -f gff -d {output.fna} -o {output.gff} 2> {log}"
+
+rule annotation:
+    input:  prot = "Gene_calling/{data}/{genome}/{genome}_Prodigal.faa",
+            db = config["pfam_db_path"]
+    output: out1 = "Gene_calling/{data}/{genome}/{genome}_Output_hmmsearch_pfam",
+            out_dom = "Gene_calling/{data}/{genome}/{genome}_table_domain_hmmsearch_pfam",
+            out_t = "Gene_calling/{data}/{genome}/{genome}_table_protein_hmmsearch_pfam"
+    params: eval = config["evalue_pfam"]
+    threads: thrs
+    message: "Annotation of {input.prot} against Pfam-A database"
+    shell: """hmmsearch --cpu {threads} --noali -E {params.eval} -o {output.out1} --domtblout {output.out_dom} --tblout {output.out_t} {input.db} {input.prot}"""
+
+rule best_hit:
+    input:  geno = expand("RAW_DATA/Genomes/{data}/{genome}{genome_ext}", data=dataset, genome=Genome, genome_ext=Genome_ext),
+            anot = "Gene_calling/{data}/{genome}/{genome}_table_protein_hmmsearch_pfam",
+            fna = "Gene_calling/{data}/{genome}/{genome}_Prodigal.fna",
+            faa = "Gene_calling/{data}/{genome}/{genome}_Prodigal.faa",
+            gff = "Gene_calling/{data}/{genome}/{genome}_Prodigal.gff"
+    output: gff = "GFF_files/{data}/{genome}.gff",
+            fna = "Gene_calling/{data}/{genome}/best_hit_pfam/{genome}.fna",
+            faa = "Gene_calling/{data}/{genome}/best_hit_pfam/{genome}.faa"
+    params: dts = "{data}", geno = "{genome}", contigs = "RAW_DATA/Genomes/"+config["dataset"]+"/{genome}"+config["genomes_ext"]
+    message: "Extracting sequences with pfam hit (best hit)"
+    shell: """ python src/extract_genes_with_pfam_best_hit.py -i {input.anot} -p {input.faa} -n {input.fna} -a {input.gff} -o {params.dts} -g {params.geno} -f {params.contigs}"""
