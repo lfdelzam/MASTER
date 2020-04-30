@@ -229,7 +229,7 @@ If you are using conda, before exiting the workflow, the environment needs to be
 
 # 7. Output description #
 
-# 7.1. Intermediate files#
+# 7.1. Intermediate files #
 
 A)	01_INDEXING
  The indexed genome file(s) are stored in this directory. A subdirectory per dataset and genome is created.  Example of filename:
