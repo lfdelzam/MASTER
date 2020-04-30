@@ -56,9 +56,9 @@ Now, go to the directory Input_POGENOM:
 
 This directory contains:
 
-•	Empty RAW_DATA/Reads and RAW_DATA/Genomes folders
-•	Config_file, snakefiles and src directories
-•	The Input_POGENOM.sh script.
+	• Empty RAW_DATA/Reads and RAW_DATA/Genomes folders
+	• Config_file, snakefiles and src directories
+	• The Input_POGENOM.sh script.
 
 Create the virtual environment (named ip_env) using the command:
 
@@ -280,7 +280,9 @@ The log files generated during gene prediction are stored in:
 
 ## 7.1.1 Intermediate files when "mode": "prefilt" ##
 
-When "mode": "prefilt", the suffix ``_prefilt`` will be added to <dataset> in intermediate files B-E, e.g., 05_BAM_merged/<dataset>_prefilt/<genome_name>_merged_sorted_position.bam
+When "mode": "prefilt", the suffix ``_prefilt`` will be added to <dataset> in intermediate files B-E, e.g.,
+	
+	05_BAM_merged/<dataset>_prefilt/<genome_name>_merged_sorted_position.bam
 	
 Additionally, the directory PREFILT/<dataset> is created and contains the subdirectories:
 
