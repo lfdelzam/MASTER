@@ -40,7 +40,7 @@ This step is realised when the user defines mode: “prefilt”. A user-defined 
 
 ## 4.2.	Sequence analysis ##
 
-The following paragraph describe the sequence analysis when using default parameters (these parameter can be modified by the user, as described in section 6):
+The following paragraph describe the sequence analysis when using default parameters (these parameter can be modified by the user, as described in section 6.2.1):
 
 Bowtie2 v 2.3.4.3 is used for mapping of metagenome reads to the Metagenome-Assembled Genomes (MAGs). As default, it is required for 95% of the read length to be aligned. The resulting SAM files are sorted and converted to BAM with samtools v1.9. Picards v2.21.6 is used to include sample names in BAM files.  Median coverage is calculated using Samtools, ignoring positions that had not acquired any reads. To avoid mapping artefacts such as high coverage of only limited genomic regions, as default ≥40% breadth (fraction of genome covered by at least one read) is needed. It is also wanted a median coverage depth of ≥ 20X (default) to include a sample.
 
