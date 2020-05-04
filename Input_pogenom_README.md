@@ -28,6 +28,10 @@ Optional:
 -	[Pfam-A hmm](https://pfam.xfam.org/) database v31.0
 
 # 4. Step description #
+
+Fig 1 resumes the pipeline steps.
+![Fig. 1 Input_POGENOM pipeline flowchart](Input_POGENOM_pipeline_flowchart.jpg)
+
 ## 4.1.	Sequence analysis ##
 The following paragraph describe the sequence analysis when using default parameters. These parameter can be modifiedby the user, as described in section (NN):
 
