@@ -12,7 +12,7 @@ The pipeline can produce VCF and GFF files for multiple genomes in parallel and 
 # 3. List of required software/packages/database #
 
 -	[snakemake](https://snakemake.readthedocs.io/en/stable/) v5.5.0
--	[bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/) v2.3.4.3 
+-	[bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/) v2.3.4.3
 -	[samtools](http://www.htslib.org/) v1.9
 -	[vcflib](https://github.com/vcflib/vcflib) v1.0.0_rc3
 -	[freebayes](https://github.com/ekg/freebayes) v1.3.1
@@ -30,7 +30,7 @@ Optional:
 # 4. Step description #
 
 Fig 1 resumes the pipeline steps.
-![Fig. 1 Input_POGENOM pipeline flowchart](Input_POGENOM_pipeline_flowchart.jpg)
+![Fig. 1 Input_POGENOM pipeline flowchart](Input_POGENOM_flowchart.png)
 
 ## 4.1.	Sequence analysis ##
 The following paragraph describe the sequence analysis when using default parameters. These parameter can be modifiedby the user, as described in section (NN):
@@ -91,7 +91,7 @@ Go to the directory Input_POGENOM/RAW_DATA/Reads/:
 	cd Input_POGENOM/RAW_DATA/Reads/
 
 Create a directory for each dataset:    
-  	
+
 	mkdir <dataset_name>
 
 There must be a least one dataset.
@@ -115,13 +115,13 @@ Go to the directory cd Input_POGENOM/RAW_DATA/Genomes/:
 	cd Input_POGENOM/RAW_DATA/Genomes/
 
 Create a directory for each dataset:    
-  
+
  	mkdir <dataset_name>
 
 There must be a least one dataset.
 
 Copy or link (recommended) genomes in FASTA format to this file:
-    
+
     cp path/to/Genomes/* <dataset_name>/. or ln -s path/to/Genomes/* <dataset_name>/.
 
 Make sure that genome names follow the syntax: ``<genome_name><genome_ext>``
@@ -130,11 +130,11 @@ e.g., P6071_521_bin125.fa, where genome_name = P6071_521_bin125, and genome_ext 
 ## 6.2. How to run the pipeline ##
 
 If you are using conda, activate the pipeline environment by typing:
-    
+
     conda activate ip_env
 
 If you are not in the working directory, go there using the command::
-    
+
     cd path/to/Input_POGENOM
 
 ### 6.2.1. Set parameters in the config file ###
@@ -222,13 +222,13 @@ Modify the required items and save the file. Use Ctrl +x and answer y, to save t
 ## 6.2.2. Run ##
 
 The workflow is run with the following command:
-    
+
     bash Input_POGENOM.sh
 
 If you need to set a different path to the config file ( flag -d=<absolute path to configFile> ), please do not use relative paths (~/ nor ./)
 
 If you are using conda, before exiting the workflow, the environment needs to be deactivated using the following command:
-    
+
     conda deactivate
 
 # 7. Output description #
@@ -237,12 +237,12 @@ If you are using conda, before exiting the workflow, the environment needs to be
 
 A)	01_INDEXING
  The indexed genome file(s) are stored in this directory. A subdirectory per dataset and genome is created.  Example of filename:
- 	
+
 	01_INDEXING/<dataset>/<genome_name>/
 
 B)	02_MAPPING
  A subdirectory per dataset and genome is created. The BAM files of mapped reads corresponding to each genome and sample are stored here.  The read group (@RG) information for each BAM file corresponds to the sample name. Example of filename:
- 
+
 	02_MAPPING/<dataset>/<genome_name>/<sample_name>_<genome_name>_mpq_<min mapping_quality>_RG_sorted_position.bam
 
 The Bowtie2 log files are stored in this directory. Example of filename:
@@ -256,9 +256,9 @@ A subdirectory per dataset and genome is created. It contains the samtools mpile
 
 D)	04_mergeable
  Files passing the filter (minimum coverage, minimum breadth) are subsampled up to minimum coverage, sorted by position and stored in this directory. Example of filename:
- 
+
 	04_mergeable/<dataset>/params_<parameters>/<genome_name>/<sample_name>_<genome_name>_RG_sorted_position_subsampled.bam
-	Where <parameters> is a string of the key parameters used, for instance 'cov_10_bdth_40_mpq_20_bq_15'. 
+	Where <parameters> is a string of the key parameters used, for instance 'cov_10_bdth_40_mpq_20_bq_15'.
 
 The corresponding log file for these steps is(are):
 
@@ -271,7 +271,7 @@ When the number of BAM files in 04_mergeable/ directory is more than 1, the file
 
 F)	Gene Calling
 Gene prediction and PFMA annotation are stored in this directory. A subdirectory is created per dataset and per Genome, Gene_calling/<dataset>/<Genome_name>/. Example of filenames:  
-	
+
 	<Genome_name>_Output_hmmsearch_pfam,
 	<Genome_name>_ table_domain_hmmsearch_pfam,
 	<Genome_name>_ table_protein_hmmsearch_pfam,
@@ -285,9 +285,9 @@ The log files generated during gene prediction are stored in:
 ## 7.1.1 Intermediate files when "mode": "prefilt" ##
 
 When "mode": "prefilt", the suffix ``_prefilt`` will be added to <dataset> in intermediate files B-E, e.g.,
-	
+
 	05_BAM_merged/<dataset>_prefilt/<genome_name>_merged_sorted_position.bam
-	
+
 Additionally, the directory PREFILT/<dataset> is created and contains the subdirectories:
 
 02_MAPPING, 03_MPILEUP, and params_<parameters>, where <parameters> is a string of the key parameters used, for instance 'cov_10_mpq_20_bq_15_fr_0.15'.
@@ -308,7 +308,7 @@ The reads used to generate those files are the Reads subsets, which are stored i
 The corresponding log file for these steps is ``log_files/samples_filter.log``
 
 The Bowtie2 log files generated when mapping Reads subset, are stored in PREFILT/<dataset>/02_MAPPING. Example of filename:
-	
+
 	PREFILT/<dataset>/02_MAPPING/params_<parameters>/log_bowtie2/<genome_name>/<sample_name>_<genome_name>.log
 
 # 7.2. VCF files #
