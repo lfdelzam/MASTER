@@ -9,6 +9,7 @@ The pipeline is capable of analysing several datasets with samples (paired fastq
 Input data (reads and genomes) must be stored in the directory ``RAW_DATA/``, as explained below:
 
 1. READS
+^^^^^^^^
 
 Go to the directory Input_POGENOM/RAW_DATA/Reads/::
 
@@ -35,6 +36,7 @@ reverse reads::
     <sample_name><rev_index><reads_ext> e.g., P6071_505_R1.fq.gz, where sample_name = P6071_505, rev_index = _R2 , and reads_ext = .fq.gz
 
 2. GENOMES
+^^^^^^^^^^
 
 Go to the directory cd Input_POGENOM/RAW_DATA/Genomes/::
 
