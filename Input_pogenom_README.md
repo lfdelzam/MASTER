@@ -36,7 +36,7 @@ Fig 1 resumes the pipeline steps.
 
 ## 4.1. Sample pre-screening ##
 
-This step is realised when the user defines mode: “prefilt”. A user-defined fraction of paired reads per sample is created using seqtk v1.3 with seed 100 (-s 100). These reads are then mapped to a reference genome, and coverage is estimated: calculated Median coverage/fraction. Samples with Estimated median coverage higher than the user-defined threshold will be kept for further analysis, as explained in section 4.2.
+This step is realised when the user defines mode: “prefilt” in the pipeline configuration file ``Input_POGENOM_config.json``. A user-defined fraction of paired reads per sample is created using seqtk v1.3 with seed 100 (-s 100). These reads are then mapped to a reference genome, and coverage is estimated: calculated Median coverage/fraction. Samples with Estimated median coverage higher than the user-defined threshold will be kept for further analysis, as explained in section 4.2.
 
 ## 4.2.	Sequence analysis ##
 
@@ -48,7 +48,7 @@ Samples displaying coverage depth values higher than the threshold are downsampl
 
 ## 4.3. Generation of GFF files ##
 
-This step is realised when the user defines annotation: “yes”. Genes are predicted from contig’s MAGs with Prodigal (v.2.6.3), running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases Pfam version 31.0, using hmmsearch version 3.3, and selecting hits with E-value < 0.001. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
+This step is realised when the user defines annotation: “yes” in the pipeline configuration file ``Input_POGENOM_config.json``. Genes are predicted from contig’s MAGs with Prodigal (v.2.6.3), running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases Pfam version 31.0, using hmmsearch version 3.3, and selecting hits with E-value < 0.001. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
 
 # 5. Installation #
 
