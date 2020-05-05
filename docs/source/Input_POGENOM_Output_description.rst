@@ -44,7 +44,7 @@ E) 05_BAM_merged.
     05_BAM_merged/<dataset>/params_<parameters>/<genome_name>_merged_sorted_position.bam
 
 F)	Gene Calling
- Gene prediction and PFMA annotation are stored in this directory ``Gene_calling``. A subdirectory is created per dataset and per Genome, Gene_calling/<dataset>/<Genome_name>/. Example of filenames::
+ Gene prediction and PFMA annotation are stored in the directory ``Gene_calling``. A subdirectory is created per dataset and per Genome, Gene_calling/<dataset>/<Genome_name>/. Example of filenames::
 
     <Genome_name>_Output_hmmsearch_pfam,
     <Genome_name>_ table_domain_hmmsearch_pfam,
@@ -115,6 +115,6 @@ The size of the genome (number of bases) is stored in file ``<genome_name>.size`
 GFF files
 ^^^^^^^^^
 
-The GFF file of genes with Pfam annotation (best hit) are stored in this directory ``GFF_files``. This GFF file contains as well as, the sequences of the corresponding contigs (only contigs with Pfam annotated genes). A subdirectory is created for each dataset. Example of filename::
+The GFF file of genes with Pfam annotation (best hit) are stored in the directory ``GFF_files``. This GFF file contains as well as, the sequences of the corresponding contigs (only contigs with Pfam annotated genes). A subdirectory is created for each dataset. Example of filename::
 
     GFF_files/<dataset>/<genome_name>.gff
