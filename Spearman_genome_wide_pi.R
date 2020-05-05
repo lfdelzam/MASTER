@@ -9,6 +9,8 @@ library("cluster")
 library(corrplot)
 library(dplyr)
 library("ggpubr")
+library(ggmap)
+library(rjson)
 
 # arguments
 p <- arg_parser("This program finds potential correlation between genome-wide pi and environmental factors")
@@ -17,7 +19,7 @@ p <- add_argument(p, "-P", help="Main directory with subdirectory containing gen
 p <- add_argument(p, "-C", help="cutoff in reduced number of samples (all environmental factors), max.p.adj.value", default=0.05)
 p <- add_argument(p, "-T", help="cutoff in all samples (only environmental factors measured in all samples), max.p.adj.value", default=0.0125)
 p <- add_argument(p, "-O", help="Output directory", default="./Correlations")
-p <- add_argument(p, "-N", help="minimum number of samples in the analysis", default=7)
+p <- add_argument(p, "-N", help="minimum number of samples in the analysis", default=6)
 
 argv <- parse_args(p)
 
@@ -81,6 +83,49 @@ for (env in vec_factors) {
   }
 }
 
+printing_map <- function(DB, Genome){
+  
+  transect_samples <- c('P1994_122', 'P1994_125', 'P1994_107', 'P1994_119', 'P1994_104', 'P1994_110', 'P1994_128', 'P1994_116', 'P1994_101', 'P1994_113')
+  lmo_samples <- c('P4201_102', 'P4201_110', 'P4201_116', 'P4201_121', 'P4201_124', 'P4201_112', 'P4201_103', 'P4201_120', 'P4201_123', 'P4201_108', 'P4201_101', 'P4201_122', 'P4201_118', 'P4201_106', 'P4201_109', 'P4201_107', 'P4201_105', 'P4201_119', 'P4201_111', 'P4201_104', 'P4201_114')
+  costal_samples <- c('P6071_523', 'P6071_534', 'P6071_515', 'P6071_503', 'P6071_529', 'P6071_510', 'P6071_513', 'P6071_530', 'P6071_508', 'P6071_527', 'P6071_502', 'P6071_528', 'P6071_531', 'P6071_506', 'P6071_501', 'P6071_518', 'P6071_504', 'P6071_532', 'P6071_533', 'P6071_509', 'P6071_517', 'P6071_507', 'P6071_521', 'P6071_524', 'P6071_522', 'P6071_520', 'P6071_519', 'P6071_505', 'P6071_525', 'P6071_511', 'P6071_512', 'P6071_514', 'P6071_516', 'P6071_526')
+  
+  # Dataset with selected samples
+  cost <- DB %>% filter(samples %in% costal_samples )
+  t <- DB %>% filter(samples %in% transect_samples )
+  lmo <- DB %>% filter(samples %in% lmo_samples )
+  
+  sbbox <- make_bbox(lon = c(5, 32), lat = c(52, 66), f = .05)
+  # get map
+  brisbane = get_map(location=sbbox, zoom=5,
+                     maptype="terrain")
+  # create map
+  brisbanemap = ggmap(brisbane)
+  
+  
+  directorio <- paste(argv$O, mag, sep = "/")
+  dir.create(directorio)
+  name4 = paste("MAP", Genome, "samples.pdf", sep = "_")
+  filename4 = paste(directorio, name4, sep = "/")
+  pdf(filename4)
+  
+  # display map
+  
+  print(
+    brisbanemap +
+      geom_point(data = cost, mapping = aes(x = Lon, y = Lat), 
+                 color = "darkblue", size = cost$Sal/2, alpha = .3) +
+      geom_point(data = t, mapping = aes(x = Lon, y = Lat), 
+                 color = "red", size = t$Sal/2, alpha = .3) +
+      geom_point(data = lmo, mapping = aes(x = Lon, y = Lat), 
+                 color = "black", size = lmo$Sal/2, alpha = .3) +
+      scale_x_continuous(name="Longitude", limits=c(5, 32)) +
+      scale_y_continuous(name="Latitude", limits=c(52, 66)) 
+  )
+  
+  dev.off()
+  
+}
+
 all_samples_correlation<-function(m_factors, m_pi, cutoff1, GENOME){ # Using all samples but only some environmental factors
 ####USING ALL samples when data is available   
 factors_in_all_samples <- c("Sal", "Temp", "PO4", "Chla", "Silicate", "Lat", "Lon") # list of environmental factors measured in all samples
@@ -117,6 +162,7 @@ if (is.null(all_best_factor[[1]])) {
   
   dev.off()
   pdf_figures_selected_factors(allDPI, all_best_factor[[3]], GENOME, length(allDPI$samples))
+  printing_map(allDPI, GENOME)
   }
 return(all_best_factor[[1]])
 }
@@ -201,6 +247,7 @@ if (length(DPI$samples) > (argv$N-1)) { # if the number of samples is higher tha
         corrplot(cor(factors), method="number", col = c("red", "blue"), bg = "white", tl.col= "black", title = GENOME)
         dev.off()
         pdf_figures_selected_factors(DPI, best_factor[[3]], GENOME, length(DPI$samples))
+        printing_map(DPI, GENOME)
        }
 } else { # If the number of samples in the "reduced dataset" (samples when all environmental factors where measured) is too small (below user-defined threshold)
   ####USING ALL samples when data is available
@@ -215,12 +262,15 @@ if (length(DPI$samples) > (argv$N-1)) { # if the number of samples is higher tha
 }
 
 # Reading Metadata
+
 df <- read.csv(argv$D, sep="\t", header = FALSE) # Reading sample metadata
 df2 <- as.data.frame(t(df))  # row to columns
 names(df2)<-df$V1 # Column names
 d <- df2[-1,] # removing unnecessary lines (Row of names twice)
+
 # converting to character instead of factors
 d$samples <- as.character(d$samples)
+
 # converting to numeric instead of factors
 for (inp in c("Sal", "Depth", "O2", "Temp", "NH4", "NO3", "PO4", "Chla", "DOC", "Silicate", "Lat", "Lon")) {
   d[[inp]]<-as.numeric(as.character(d[[inp]]))
