@@ -96,10 +96,9 @@ printing_map <- function(DB, Genome){
   
   sbbox <- make_bbox(lon = c(5, 32), lat = c(52, 66), f = .05)
   # get map
-  brisbane = get_map(location=sbbox, zoom=5,
-                     maptype="terrain")
+  baltic = get_map(location=sbbox, zoom=5, maptype="terrain")
   # create map
-  brisbanemap = ggmap(brisbane)
+  balticmap = ggmap(baltic)
   
   
   directorio <- paste(argv$O, mag, sep = "/")
@@ -111,7 +110,7 @@ printing_map <- function(DB, Genome){
   # display map
   
   print(
-    brisbanemap +
+    balticmap +
       geom_point(data = cost, mapping = aes(x = Lon, y = Lat), 
                  color = "darkblue", size = cost$Sal/2, alpha = .3) +
       geom_point(data = t, mapping = aes(x = Lon, y = Lat), 
