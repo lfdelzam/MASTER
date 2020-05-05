@@ -48,7 +48,7 @@ Samples displaying coverage depth values higher than the threshold are downsampl
 
 ## 4.3. Generation of GFF files ##
 
-Genes are predicted from contig’s MAGs with Prodigal (v.2.6.3), running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases Pfam version 31.0, using hmmsearch version 3.3, and selecting hits with E-value < 0.001. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
+This step is realised when the user defines annotation: “yes”. Genes are predicted from contig’s MAGs with Prodigal (v.2.6.3), running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases Pfam version 31.0, using hmmsearch version 3.3, and selecting hits with E-value < 0.001. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
 
 # 5. Installation #
 
@@ -317,7 +317,7 @@ The Bowtie2 log files generated when mapping Reads subset, are stored in PREFILT
 
 # 7.2. VCF files #
 
-Variant calling files per genome (input for POGENOM) are stored in the directory 06_VCF.
+Variant calling files per genome (input for POGENOM) are stored in the directory ``06_VCF``.
 Example of filename:    
 
 	06_VCF/<dataset>/params_<parameters>/<genome_name>.vcf
