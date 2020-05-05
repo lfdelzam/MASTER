@@ -2,7 +2,7 @@ Usage
 =====
 
 Organise your data
-^^^^^^^^^^^^^^^^^^
+------------------
 
 The pipeline is capable of analysing several datasets with samples (paired fastq read files) and several genomes (fasta files). The minimum data required is one dataset with one pair of read files (forward and reverse) and one genome.
 
@@ -56,7 +56,8 @@ Make sure that genome names follow the syntax::
 
 
 Run the pipeline
-^^^^^^^^^^^^^^^^
+----------------
+
 If you are using conda, activate the pipeline environment by typing::
 
     conda activate ip_env
@@ -66,6 +67,7 @@ If you are not in the working directory, go there using the command::
     cd path/to/Input_POGENOM
 
 1. Set parameters in the config file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the "Input_POGENOM_config.json" file, set the parameters to be used. It contains the pipeline parameters. Below an example:
 
@@ -161,6 +163,7 @@ To access and modify this file, you can use the following command::
 Modify the required items and save the file. Use Ctrl +x and answer y, to save the modifications and exit the file.
 
 2. Run
+^^^^^^
 
 The workflow is run with the following command::
 
