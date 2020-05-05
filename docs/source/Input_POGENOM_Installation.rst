@@ -25,8 +25,8 @@ Installing the pipeline
 The easiest and recommended way to install this pipeline is through conda in an isolated environment.
 Below an example of how to install Miniconda3 (on Linux) and how to set up the pipeline (including its required software) in an environment:
 
-1. Installing miniconda (Linux)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**1. Installing miniconda (Linux)**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Download miniconda::
 
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -41,8 +41,8 @@ It may be necessary to source, with the command::
 
     source ~/.bashrc
 
-2. Download the pipeline and Install the pipeline software
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**2. Download the pipeline and Install the pipeline software**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Clone the repository from GitHub::
 
