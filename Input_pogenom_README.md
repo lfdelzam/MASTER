@@ -40,7 +40,7 @@ This step is realised when the user defines mode: “prefilt”. A user-defined 
 
 ## 4.2.	Sequence analysis ##
 
-The following paragraph describe the sequence analysis when using default parameters (these parameter can be modified by the user, as described in section 6.2.1):
+The following paragraph describe the sequence analysis when using default parameters (the user can modify these parameters, as described in section 6.2.1):
 
 Bowtie2 v 2.3.4.3 is used for mapping of metagenome reads to the Metagenome-Assembled Genomes (MAGs). As default, it is required for 95% of the read length to be aligned. The resulting SAM files are sorted and converted to BAM with samtools v1.9. Picards v2.21.6 is used to include sample names in BAM files.  Median coverage is calculated using Samtools, ignoring positions that had not acquired any reads. To avoid mapping artefacts such as high coverage of only limited genomic regions, as default ≥40% breadth (fraction of genome covered by at least one read) is needed. It is also wanted a median coverage depth of ≥ 20X (default) to include a sample.
 
@@ -274,7 +274,7 @@ When the number of BAM files in 04_mergeable/ directory is more than 1, the file
 	05_BAM_merged/<dataset>/params_<parameters>/<genome_name>_merged_sorted_position.bam
 
 F)	Gene Calling
-Gene prediction and PFMA annotation are stored in this directory. A subdirectory is created per dataset and per Genome, Gene_calling/<dataset>/<Genome_name>/. Example of filenames:  
+Gene prediction and PFMA annotation are stored in this directory ``Gene_calling``. A subdirectory is created per dataset and per Genome, Gene_calling/<dataset>/<Genome_name>/. Example of filenames:  
 
 	<Genome_name>_Output_hmmsearch_pfam,
 	<Genome_name>_ table_domain_hmmsearch_pfam,
@@ -341,10 +341,10 @@ The corresponding log file for these steps is (are):
 
 # 7.3. Genome size files #
 
-The size of the genome (number of bases) is stored in file ``<genome_name>.size``. This value may be used later as input for POGENOM.
+The size of the genome (number of bases) is stored in file ``<genome_name>.size`` in the directory ``Genome_sizes``. This value may be used later as input for POGENOM.
 
 # 7.4. GFF files #
 
-The GFF file of genes with Pfam annotation (best hit) are stored in this directory. This GFF file contains as well as, the sequences of the corresponding contigs (only contigs with Pfam annotated genes). A subdirectory is created for each dataset. Example of filename:
+The GFF file of genes with Pfam annotation (best hit) are stored in this directory ``GFF_files``. This GFF file contains as well as, the sequences of the corresponding contigs (only contigs with Pfam annotated genes). A subdirectory is created for each dataset. Example of filename:
 
 	GFF_files/<dataset>/<genome_name>.gff
