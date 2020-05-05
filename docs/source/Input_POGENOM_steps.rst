@@ -3,7 +3,7 @@ Step description
 
 The pipeline steps are sumarised in the following figure
 
-.. figure:: https://github.com/lfdelzam/MASTER/Input_POGENOM_flowchart.png
+.. figure:: Input_POGENOM_flowchart.png
    :width: 400px
    :align: center
   

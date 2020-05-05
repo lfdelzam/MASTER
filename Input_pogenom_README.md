@@ -29,7 +29,7 @@ Optional:
 
 # 4. Step description #
 
-Fig 1 resumes the pipeline steps.
+The following figure resumes the pipeline steps.
 
 ![Fig. 1 Input_POGENOM pipeline flowchart](Input_POGENOM_flowchart.png)
 
