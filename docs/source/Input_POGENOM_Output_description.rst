@@ -89,7 +89,7 @@ The Bowtie2 log files generated when mapping Reads subset, are stored in ``PREFI
 VCF files
 ^^^^^^^^^
 
-Variant calling files per genome (input for POGENOM) are stored in the directory 06_VCF.
+Variant calling files per genome (input for POGENOM) are stored in the directory ``06_VCF``.
 Example of filename::
 
     06_VCF/<dataset>/params_<parameters>/<genome_name>.vcf
