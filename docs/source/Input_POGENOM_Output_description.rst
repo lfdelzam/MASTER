@@ -2,7 +2,7 @@ Output description
 ==================
 
 Intermediate files
-^^^^^^^^^^^^^^^^^^
+------------------
 
 A) 01_INDEXING.
  The indexed genome file(s) are stored in this directory. A subdirectory per dataset and genome is created.  Example of filename::
@@ -87,7 +87,7 @@ The Bowtie2 log files generated when mapping Reads subset, are stored in ``PREFI
 
 
 VCF files
-^^^^^^^^^
+---------
 
 Variant calling files per genome (input for POGENOM) are stored in the directory ``06_VCF``.
 Example of filename::
@@ -108,12 +108,12 @@ The corresponding log file for these steps is (are)::
     log_files/<dataset>_genomes_vcf_files.log or log_files/<dataset>.<genome_name>_vcf_files.log (when "mode": "prefilt")
 
 Genome size files
-^^^^^^^^^^^^^^^^^
+-----------------
 
 The size of the genome (number of bases) is stored in file ``<genome_name>.size`` in the directory ``Genome_sizes``. This value may be used later as input for POGENOM.
 
 GFF files
-^^^^^^^^^
+---------
 
 The GFF file of genes with Pfam annotation (best hit) are stored in the directory ``GFF_files``. This GFF file contains as well as, the sequences of the corresponding contigs (only contigs with Pfam annotated genes). A subdirectory is created for each dataset. Example of filename::
 
