@@ -27,7 +27,7 @@ The easiest and recommended way to install this pipeline is through conda in an 
 Below an example of how to install Miniconda3 (on Linux) and how to set up the pipeline (including its required software) in an environment:
 
 1. **Installing miniconda (Linux)**
-   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Download miniconda::
 
@@ -44,7 +44,7 @@ It may be necessary to source, with the command::
     source ~/.bashrc
 
 2. **Download the pipeline and Install the pipeline software**
-   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Clone the repository from GitHub::
 
