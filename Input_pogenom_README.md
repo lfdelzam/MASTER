@@ -52,7 +52,7 @@ Samples displaying coverage depth values higher than the threshold are downsampl
 
 ## 4.3. Generation of GFF files ##
 
-This step is realised when the user defines annotation: “yes” in the pipeline configuration file ``Input_POGENOM_config.json``, as explained in section 6.2.1. Genes are predicted from contig’s MAGs with -	[Prodigal](https://github.com/hyattpd/Prodigal) v.2.6.3, running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases [Pfam-A hmm](https://pfam.xfam.org/) version 31.0, using [hmmsearch](http://hmmer.org/) version 3.3, and selecting hits with *E-value < 0.001*. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
+This step is realised when the user defines annotation: “yes” in the pipeline configuration file ``Input_POGENOM_config.json``, as explained in section 6.2.1. Genes are predicted from contig’s MAGs with [Prodigal](https://github.com/hyattpd/Prodigal) v.2.6.3, running the program on each MAG separately in default single genome mode. Predicted genes are annotated against the databases [Pfam-A hmm](https://pfam.xfam.org/) version 31.0, using [hmmsearch](http://hmmer.org/) version 3.3, and selecting hits with *E-value < 0.001*. Genes annotated are selected, keeping the best Pfam hit (the highest score), and a GFF file corresponding to those genes is created. This GFF file will be a POGENOM input file.
 
 # 5. Installation #
 
