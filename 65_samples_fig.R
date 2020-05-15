@@ -22,7 +22,8 @@ names(df2)<-df$V1 # Column names
 d <- df2[-1,] # removing unnecessary lines (Row of names twice)
 # converting to character instead of factors
 d$samples <- as.character(d$samples)
-for (inp in c("Sal", "Depth", "O2", "Temp", "NH4", "NO3", "PO4", "Chla", "DOC", "Silicate", "Lat", "Lon")) {
+var <- c("Sal", "Depth", "O2", "Temp", "NH4", "NO3", "PO4", "Chla", "DOC", "Silicate", "Lat", "Lon")
+for (inp in var) {
   d[[inp]]<-as.numeric(as.character(d[[inp]]))
 }
 #selecting relevant data
@@ -42,38 +43,38 @@ costal_samples <- c('P6071_523', 'P6071_534', 'P6071_515', 'P6071_503', 'P6071_5
 
 # Dataset with selected samples
 cost <- finaldf %>% filter(samples %in% costal_samples )
+cost$Dataset <- rep("Costal", length(cost$samples))
 t <- finaldf %>% filter(samples %in% transect_samples )
+t$Dataset <- rep("Transect", length(t$samples))
 lmo <- finaldf %>% filter(samples %in% lmo_samples )
+lmo$Dataset <- rep("LMO", length(lmo$samples))
 
 
+all <-rbind(cost, lmo, t)
 
-sbbox <- make_bbox(lon = c(5, 32), lat = c(52, 66), f = .05)
+sbbox <- make_bbox(lon = c(6, 31), lat = c(53, 66), f = .05)
 # get map
-baltic = get_map(location=sbbox, zoom=5, maptype="terrain")
+baltic = get_map(location=sbbox, zoom=6, maptype="terrain")
 # create map
 balticmap = ggmap(baltic)
-pdf("input_pogenom_validation_samples.pdf")
+
 # display map
+N <- balticmap + geom_point(data = all, mapping = aes(x = Lon, y = Lat, fill=Dataset, color=Dataset, size=Sal), #shape=Dataset), 
+            alpha = .4)+
+  scale_color_manual(values=c("red", "blue", "black"))+
+  theme(legend.title = element_text(colour="black", size=10, face="bold"))+
+  theme(legend.text = element_text(colour="black", size=10, face="bold"))+
+  scale_size(name = "Salinity",  breaks = c(3,8,14,22,28))+
+  scale_x_continuous(name="Longitude", limits=c(6, 31)) +
+  scale_y_continuous(name="Latitude", limits=c(53, 66)) 
 
-print(
-balticmap +
-  geom_point(data = cost, mapping = aes(x = Lon, y = Lat), 
-             color = "darkblue", size = cost$Sal/2, alpha = .3) +
-  geom_point(data = t, mapping = aes(x = Lon, y = Lat), 
-             color = "red", size = t$Sal/2, alpha = .3) +
-  geom_point(data = lmo, mapping = aes(x = Lon, y = Lat), 
-             color = "black", size = lmo$Sal/2, alpha = .3) +
-  scale_x_continuous(name="Longitude", limits=c(5, 32)) +
-  scale_y_continuous(name="Latitude", limits=c(52, 66)) 
-)
+ggsave("input_pogenom_validation_samples.pdf", N, width = 20, height = 20, units = "cm")  
 
-dev.off()
 
 # MAX, MEDIAN, MEAN; MIN of environmental factors in dataset
-VDB <- rbind(t, cost, lmo)
-var <- c("Sal", "Depth", "O2", "Temp", "NH4", "NO3", "PO4", "Chla", "DOC", "Silicate", "Lat", "Lon")
+
 for (f in seq(2,length(var)+1,1)){
-  J <-na.omit(VDB[[f]])
+  J <-na.omit(all[[f]])
   cat(paste(var[f-1],round(max(J), 3), round(median(J), 3), round(mean(J), 3), round(min(J),3), " ", sep="\n"))
 }
 

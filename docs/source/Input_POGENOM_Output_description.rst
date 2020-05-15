@@ -5,7 +5,7 @@ Intermediate files
 ------------------
 
 A) 01_INDEXING.
- The indexed genome file(s) are stored in this directory. A subdirectory per dataset and genome is created.  Example of filename::
+ The indexed genome file(s) are stored in this directory. A subdirectory per dataset and genome is created. Example of filename::
 
     01_INDEXING/<dataset>/<genome_name>/
 

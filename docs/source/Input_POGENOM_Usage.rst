@@ -8,8 +8,8 @@ The pipeline is capable of analysing several datasets with samples (paired fastq
 
 Input data (reads and genomes) must be stored in the directory ``RAW_DATA/``, as explained below:
 
-**1. READS**
-^^^^^^^^^^^^
+1. **READS**
+   ^^^^^^^^^
 
 Go to the directory Input_POGENOM/RAW_DATA/Reads/::
 
@@ -35,8 +35,8 @@ reverse reads::
 
     <sample_name><rev_index><reads_ext> e.g., P6071_505_R1.fq.gz, where sample_name = P6071_505, rev_index = _R2 , and reads_ext = .fq.gz
 
-**2. GENOMES**
-^^^^^^^^^^^^^^
+2. **GENOMES**
+   ^^^^^^^^^^^
 
 Go to the directory cd Input_POGENOM/RAW_DATA/Genomes/::
 
@@ -68,8 +68,8 @@ If you are not in the working directory, go there using the command::
 
     cd path/to/Input_POGENOM
 
-**1. Set parameters in the config file**
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1. **Set parameters in the config file**
+   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the "Input_POGENOM_config.json" file, set the parameters to be used. It contains the pipeline parameters. Below an example:
 
@@ -80,7 +80,7 @@ In the "Input_POGENOM_config.json" file, set the parameters to be used. It conta
   It cannot be empty.
 
 "mode": "prefilt",
-  When "mode": "prefilt", the pipeline will do a quick prescreening by mapping a subset of the reads from each sample, to estimate the     coverage of the samples and determine which should be included.
+  When "mode": "prefilt", the pipeline will do a quick prescreening by mapping a subset of the reads from each sample, to estimate the coverage of the samples and determine which should be included.
   If no prescreening (prefilt) is required, then set an empty string ("mode": "",).
 
 "fraction": "0.15",
@@ -90,7 +90,7 @@ In the "Input_POGENOM_config.json" file, set the parameters to be used. It conta
   Required is mode "prefilt" used.
 
 "temp_sub_Reads_dir": "PREFILT",
-  Directory storing the subsampled reads when running the pipeline using "mode": "prefilt". The size of this directory will be    "fraction" * the size of "dataset".
+  Directory storing the subsampled reads when running the pipeline using "mode": "prefilt". The size of this directory will be "fraction" * the size of "dataset".
   Required is mode "prefilt" used.
 
 "remove_subreads": "no",
@@ -150,13 +150,13 @@ In the "Input_POGENOM_config.json" file, set the parameters to be used. It conta
   Snakemake extra command line options (comma-separated) to be used. If you don't want to use any extra command line, set an empty string, "snakemake_extra_params": "".
 
 "annotation": "yes",
-	Set “yes” when prediction and Pfam annotation of genes are required, otherwise, set 	“no”.
+	Set “yes” when prediction and Pfam annotation of genes are required, otherwise, set “no”.
 
 "pfam_db_path": "/absolute/path/to/Pfam-A.hmm",
-	Here, the user set the path to the Pfam-A.hmm database. This parameter is mandatory	 	when "annotation": "yes".
+	Here, the user set the path to the Pfam-A.hmm database. This parameter is mandatory	when "annotation": "yes".
 
 "evalue_pfam": "0.001"
-	E-value threshold used when annotating genes against Pfam database. This parameter is 	mandatory when "annotation": "yes".
+	E-value threshold used when annotating genes against Pfam database. This parameter is	mandatory when "annotation": "yes".
 
 To access and modify this file, you can use the following command::
 
@@ -164,8 +164,8 @@ To access and modify this file, you can use the following command::
 
 Modify the required items and save the file. Use Ctrl +x and answer y, to save the modifications and exit the file.
 
-**2. Run**
-^^^^^^^^^^
+2. **Run**
+   ^^^^^^^
 
 The workflow is run with the following command::
 
