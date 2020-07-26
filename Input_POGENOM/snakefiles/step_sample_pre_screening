@@ -10,7 +10,7 @@ thrs = config["threads"]
 reads_ext = config["reads_ext"]
 mags_ext = config["genomes_ext"]
 MAGs_dir = os.path.join(config["workdir"], "RAW_DATA", "Genomes", config["dataset"])
-READS_dir = os.path.join(config["workdir"], config["temp_sub_Reads_dir"], "Reads", "fraction_"+config["fraction"])
+READS_dir = os.path.join(config["workdir"], config["temp_sub_Reads_dir"], "Reads", config["dataset"], "fraction_"+config["fraction"])
 fraction = config["fraction"]
 dataset = config["dataset"]
 min_coverage = config["min_coverage"]
@@ -50,14 +50,14 @@ rule indexing:
 rule mapping:
   input:  expand("01_INDEXING/{dataset}/{prefix_mag}/{prefix_mag}.{suffix1}.bt2", dataset=dataset, suffix1=range(1, 5), prefix_mag=prefix_MAGs),
           expand("01_INDEXING/{dataset}/{prefix_mag}/{prefix_mag}.rev.{suffix}.bt2", dataset=dataset, suffix=range(1, 3), prefix_mag=prefix_MAGs),
-          fwd = expand("{tmpdir}/Reads/fraction_{fraction}/{sample}{fwdi}{reads_ext}", tmpdir=config["temp_sub_Reads_dir"], fraction=fraction, sample=samples, reads_ext=reads_ext, fwdi=config["fwd_index"]),
-          rev = expand("{tmpdir}/Reads/fraction_{fraction}/{sample}{revi}{reads_ext}", tmpdir=config["temp_sub_Reads_dir"], fraction=fraction, sample=samples, reads_ext=reads_ext, revi=config["rev_index"])
+          fwd = expand("{tmpdir}/Reads/{dataset}/fraction_{fraction}/{sample}{fwdi}{reads_ext}", tmpdir=config["temp_sub_Reads_dir"], fraction=fraction, sample=samples, reads_ext=reads_ext, fwdi=config["fwd_index"], dataset=dataset),
+          rev = expand("{tmpdir}/Reads/{dataset}/fraction_{fraction}/{sample}{revi}{reads_ext}", tmpdir=config["temp_sub_Reads_dir"], fraction=fraction, sample=samples, reads_ext=reads_ext, revi=config["rev_index"], dataset=dataset)
   output: expand("PREFILT/{{dataset}}/02_MAPPING/params_mpq_{{mapqual}}_fr_{{fr}}/{{prefix_mag}}/{{sample}}_{{prefix_mag}}_sorted_position.bam", dataset=dataset, prefix_mag=prefix_MAGs, mapqual=mapqual, sample=samples, fr=fraction)
   params: index = "01_INDEXING/{dataset}/{prefix_mag}/{prefix_mag}",
           mapqual = mapqual,
           bowtie2 = config["bowtie2_params"],
-          groupfwd2 = config["temp_sub_Reads_dir"]+"/Reads/fraction_"+config["fraction"]+"/{sample}"+config["fwd_index"]+config["reads_ext"],
-          grouprev2 = config["temp_sub_Reads_dir"]+"/Reads/fraction_"+config["fraction"]+"/{sample}"+config["rev_index"]+config["reads_ext"],
+          groupfwd2 = config["temp_sub_Reads_dir"]+"/Reads/"+config["dataset"]+"/fraction_"+config["fraction"]+"/{sample}"+config["fwd_index"]+config["reads_ext"],
+          grouprev2 = config["temp_sub_Reads_dir"]+"/Reads/"+config["dataset"]+"/fraction_"+config["fraction"]+"/{sample}"+config["rev_index"]+config["reads_ext"],
           view = sam_view_params
   log: expand("PREFILT/{{dataset}}/02_MAPPING/params_mpq_{{mapqual}}_fr_{{fr}}/log_bowtie2/{{prefix_mag}}/{{sample}}_{{prefix_mag}}.log", dataset=dataset, prefix_mag=prefix_MAGs, mapqual=mapqual, sample=samples, fr=fraction)
   threads: thrs

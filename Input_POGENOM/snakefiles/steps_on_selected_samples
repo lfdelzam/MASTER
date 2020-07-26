@@ -81,11 +81,12 @@ rule mpileup_and_coverage:
           minbreadth = int(config["min_breadth"]),
           minbasequal = int(config["min_bsq_for_cov_median_calculation"]),
           threads = int(config["threads"]),
-          pdir = params_dir
+          pdir = params_dir,
+          sub_sampl = config["sub_sampling"]
   message: "Samtools mpileup and calculating coverage, breadth and filtering {params.input} file"
   shell: """
           samtools mpileup -d 1000000 -Q {params.minbasequal} -a {params.input} > {params.out}
-          bash src/cov_bdrth_in_dataset.sh {params.out} {params.input} {params.merg} {params.mag} {params.mincov} {params.minbreadth} {params.threads} {params.dataset} {params.sp} {params.pdir}
+          bash src/cov_bdrth_in_dataset.sh {params.out} {params.input} {params.merg} {params.mag} {params.mincov} {params.minbreadth} {params.threads} {params.dataset} {params.sp} {params.pdir} {params.sub_sampl}
          """
 rule vcf:
   input:  expand("03_MPILEUP/{dataset}_prefilt/{params_dir}/{prefix_mag}/{sample}_{prefix_mag}_mpq_{mapqual}_mpileup", dataset=dataset, prefix_mag=prefix_MAGs, mapqual=mapqual, sample=samples, params_dir=params_dir)
@@ -96,4 +97,4 @@ rule vcf:
           dts = config["dataset"]+"_prefilt",
           pdir = params_dir
   threads: config["threads"]
-  shell: "bash src/sorting_per_Genome.sh {params.mag} {params.wd} {params.path} {threads} {params.dts} {params.pdir}"
+  shell: "bash src/calling_per_Genome.sh {params.mag} {params.wd} {params.path} {threads} {params.dts} {params.pdir}"

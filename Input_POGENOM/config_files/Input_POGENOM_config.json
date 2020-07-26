@@ -1,10 +1,11 @@
 {
   "workdir": "/absolute/path/to/Input_POGENOM",
-  "dataset": "NAME",
+  "dataset": "name",
   "min_coverage": 20,
   "min_breadth": 40,
+  "sub_sampling": "yes",
   "min_bsq_for_cov_median_calculation": 15,
-  "mode": "prefilt",
+  "mode": "prefil",
   "fraction": "0.15",
   "temp_sub_Reads_dir": "PREFILT",
   "remove_subreads": "no",
@@ -19,7 +20,7 @@
   "freebayes_parameters": "-C 4 -p 1 --pooled-continuous --read-max-mismatch-fraction 0.05 --min-alternate-fraction 0.01 -q 15",
   "vcffilter_qual": "'QUAL > 20'",
   "snakemake_extra_params": "--quiet",
-  "annotation": "yes",
+  "annotation": "non",
   "pfam_db_path": "/absolute/path/to/Pfam-A.hmm",
   "evalue_pfam": "0.001"
 }

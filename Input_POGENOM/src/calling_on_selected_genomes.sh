@@ -29,11 +29,11 @@ if [ "$(ls -A $wdir/$MAGs_path/$i)" ]  # if directory is not empty
     files=($(ls $wdir/$MAGs_path/$i/*.bam)) # list of BAM files for this genome
     if (( $(echo "${#files[@]} > 1" | bc -l) )) # If there are more than 1 bam file (several samples)
        then
-            snakemake -s snakefiles/step2 --config mag_name="$i" -j $threads -F  # It merges BAM files and generates VCF files
+            snakemake -s snakefiles/step2_calling_several_BAMs --config mag_name="$i" -j $threads -F  # It merges BAM files and generates VCF files
 
     elif (( $(echo "${#files[@]} == 1" | bc -l) ))
         then
-          snakemake -s snakefiles/step2_B --config mag_name="$i" -j $threads -F  # It generates VCF files
+          snakemake -s snakefiles/step2_B_calling_one_BAM --config mag_name="$i" -j $threads -F  # It generates VCF files
     fi
 else
   mkdir -p $wdir/06_VCF/$dts/$pdir

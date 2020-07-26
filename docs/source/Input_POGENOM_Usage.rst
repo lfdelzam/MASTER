@@ -108,6 +108,10 @@ In the "Input_POGENOM_config.json" file, set the parameters to be used. It conta
 "min_bsq_for_cov_median_calculation": 15,
   Minimum base quality when counting the number of bases per genome position during coverage calculation. Integer. It cannot be empty.
 
+"sub_sampling": "yes",
+ When this option is set to "yes", for the mapped samples that passed the user-defined coverage and breadth threshold, the pipeline will down-sample to a target median coverage (i.e., same value as "min_coverage"), to avoid biases due to uneven coverage.
+ If no subsampling is required, set an empty string ("sub_sampling": "",).
+
 "threads": 15,
   Number of threads. Integer. It cannot be empty.
 
